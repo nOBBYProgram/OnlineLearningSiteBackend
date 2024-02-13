@@ -8,7 +8,7 @@ const user = require('./Routes/userRoute')
 const course = require('./Routes/courseRoute')
 const cookieParser = require('cookie-parser')
 const review = require('./Routes/reviewRoute')
-
+const port = process.env.PORT || 5000
 dotenv.config()
 const connectToMongo = async()=>{
     try{
@@ -30,6 +30,6 @@ app.use('/course',course)
 app.use('/review',review)
 app.listen(5000,()=>{
     connectToMongo()
-    console.log("Port running on 5000")
+    console.log(`Port running on ${port}`)
 
 })
