@@ -11,6 +11,27 @@ const userSchema = new mongoose.Schema({
         required:true,
         unique:true
     },
+    Website:{
+        type:String
+    },
+    Twitter:{
+        type:String
+    },
+    biography:{
+        type:String
+    },
+    FirstName:{
+        type:String
+    },
+    LastName:{
+        type:String
+    },
+    image:{
+        type:String
+    },
+    Facebook:{
+        type:String
+    },
     password:{
         type:String,
         required:true,

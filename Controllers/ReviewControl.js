@@ -3,7 +3,7 @@ const Review = require('../Modals/ReviewModal')
 const postReview = async(req,res)=>{
     try{
 const newReview = new Review(req.body)
-
+await newReview.populate('userId').execPopulate();
 await newReview.save()
 
 res.status(200).json({success:true,newReview})
@@ -27,6 +27,7 @@ res.status(200).json({success:true,reviews})
 
 const getReviewById = async(req,res)=>{
     const {id} = req.params
+    console.log("get revies by id",id)
     console.log(id)
     try{
 const reviews = await Review.find({courseId:id}).populate('userId courseId')

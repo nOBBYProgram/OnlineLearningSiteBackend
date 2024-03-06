@@ -15,6 +15,10 @@ const courseSchema = mongoose.Schema({
       img:{
         type:String
       },
+      videos:{
+        type:[String],
+        required:true
+      },
       title:{
         type:String
       },
@@ -37,7 +41,7 @@ const courseSchema = mongoose.Schema({
       },
       level:{
         type:String,
-        enum:['All level','Beginner','Intermediate','Expert']
+        enum:['All','Beginner','Intermediate','Expert']
     
       },
   ratings:[
@@ -79,7 +83,10 @@ type:[String],
         type:[String],
     
       },
-    
+    userId:{
+      type:mongoose.Schema.Types.ObjectId,
+      ref:User
+    }
     },
     {timestamps:true})
 

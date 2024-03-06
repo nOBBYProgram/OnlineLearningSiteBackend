@@ -49,7 +49,7 @@ const token = jwt.sign({userId:existingUser._id,role:existingUser.role},process.
 
 res.cookie('token',token,{httpOnly:true})
 
-res.status(200).json({success:true,existingUser})
+res.status(200).json({success:true,existingUser,token})
 
     }
     catch(err){
