@@ -6,9 +6,23 @@ const register = async(req,res)=>{
     try{
 const {username,email,password,role} = req.body
 
-const existingUser =await User.findOne({username})
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+if (!email || !emailRegex.test(email)) {
+    return res.status(400).json({ success: false, message: 'Please provide a valid email address' });
+}
+
+const existingUser =await User.findOne({$or:[{username},{email}] })
 if(existingUser){
- return   res.status(400).json({success:false,message:"Username already exists"})
+const existingField = existingUser.username === username ? 'Username' : 'Email'
+
+return res.status(400).json({success:false,message:`${existingField} already Exists` })
+}
+
+
+
+if(!password || password.trim() === ""){
+    
+return res.status(400).json({success:false,message:`Password field cannot be left empty!!` })
 }
 const hashedPassword = await bcrypt.hash(password,10)
 
@@ -32,18 +46,18 @@ res.status(200).send({success:true,newUser})
 
 const login = async(req,res)=>{
     try{
-const {username,password} = req.body;
+const {email,password} = req.body;
 
-const existingUser = await User.findOne({username})
+const existingUser = await User.findOne({email})
 
 if(!existingUser){
-    return res.status(404).send("User not found")
+    return res.status(400).json({success:false,message:"Email Id does not exist!!"})
 }
 
 const hashedPassword = await bcrypt.compare(password,existingUser.password)
 
 if(!hashedPassword){
-    return res.status(400).json({success:false,message:"Wrong password"})
+    return res.status(400).json({success:false,message:"Please Enter a correct password!"})
 }
 const token = jwt.sign({userId:existingUser._id,role:existingUser.role},process.env.secretKey)
 

@@ -3,7 +3,7 @@ const Review = require('../Modals/ReviewModal')
 const postReview = async(req,res)=>{
     try{
 const newReview = new Review(req.body)
-await newReview.populate('userId').execPopulate();
+await newReview.populate('userId')
 await newReview.save()
 
 res.status(200).json({success:true,newReview})
